@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ihwan Urdi - UI/UX Designer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js"></script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1c2c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+        
+        /* Modern Gradient Effects */
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        /* Animated Background */
+        .gradient-bg {
+            background: linear-gradient(-45deg, #1a1c2c, #2a2d3e, #2c1a4d, #1a2c2c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        /* Floating Animation */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        /* Skill Progress Bars */
+        .skill-progress {
+            position: relative;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-progress-bar {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 1.5s ease;
+        }
+        
+        /* Custom Animations */
+        .slide-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .slide-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white overflow-x-hidden">
+    <!-- Navbar with Blur Effect -->
+    <nav class="fixed w-full glass-effect z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <span class="font-bold text-2xl gradient-text">Ihwan Urdi</span>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-purple-400 transition-all duration-300 relative nav-link">
+                        Beranda
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300"></span>
+                    </a>
+                    <a href="#about" class="hover:text-purple-400 transition-all duration-300 relative nav-link">
+                        Tentang
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300"></span>
+                    </a>
+                    <a href="#skills" class="hover:text-purple-400 transition-all duration-300 relative nav-link">
+                        Keahlian
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300"></span>
+                    </a>
+                    <a href="#projects" class="hover:text-purple-400 transition-all duration-300 relative nav-link">
+                        Proyek
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300"></span>
+                    </a>
+                    <a href="#contact" class="hover:text-purple-400 transition-all duration-300 relative nav-link">
+                        Kontak
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300"></span>
+                    </a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button class="text-white focus:outline-none" id="menuButton">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="md:hidden hidden" id="mobileMenu">
+                <div class="flex flex-col space-y-4 mt-4">
+                    <a href="#home" class="hover:text-purple-400 transition">Beranda</a>
+                    <a href="#about" class="hover:text-purple-400 transition">Tentang</a>
+                    <a href="#skills" class="hover:text-purple-400 transition">Keahlian</a>
+                    <a href="#projects" class="hover:text-purple-400 transition">Proyek</a>
+                    <a href="#contact" class="hover:text-purple-400 transition">Kontak</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Parallax -->
+    <section id="home" class="min-h-screen flex items-center pt-24 gradient-bg">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 text-center md:text-left" data-aos="fade-right">
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 gradient-text floating">
+                        Ihwan Urdi
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-8 slide-up">
+                        UI/UX Designer & Digital Creator
+                    </p>
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start slide-up">
+                        <a href="#contact" class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-10 py-4 rounded-full hover:shadow-lg transform hover:scale-105 transition duration-300">
+                            Mulai Kolaborasi
+                        </a>
+                        <a href="#projects" class="border border-purple-500 text-purple-500 px-10 py-4 rounded-full hover:bg-purple-500 hover:text-white transition duration-300">
+                            Lihat Portfolio
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 mt-12 md:mt-0" data-aos="fade-left">
+                    <div class="relative floating">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full blur-3xl opacity-20"></div>
+                        <img src="Image/Ihwanurdi.jpg" alt="Hero Image" class="rounded-full mx-auto relative z-10 border-4 border-purple-500 transform hover:scale-105 transition duration-300" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section with Parallax Cards -->
+    <section id="about" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 gradient-text slide-up">Tentang Saya</h2>
+            <div class="max-w-3xl mx-auto glass-effect p-8 rounded-2xl slide-up card-hover">
+                <p class="mb-6 text-lg text-gray-300">
+                    Hi Everyone! Saya adalah mahasiswa semester 4 jurusan Sistem Informasi yang memiliki passion mendalam dalam UI/UX Design. 
+                    Dengan pendekatan yang berfokus pada estetika dan fungsionalitas, saya menciptakan pengalaman digital yang 
+                    tidak hanya memukau secara visual, tetapi juga intuitif dan bermakna.
+                </p>
+                <p class="text-lg text-gray-300">
+                    Melalui kombinasi kreativitas dan pemahaman mendalam tentang perilaku pengguna, saya berkomitmen untuk 
+                    menghasilkan solusi desain yang elegan dan efektif untuk setiap proyek.
+                </p>
+                <!-- Skill Progress Bars -->
+                <div class="mt-8 space-y-4">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>UI Design</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>UX Research</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Prototyping</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section with 3D Cards -->
+    <section id="skills" class="py-20 gradient-bg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 gradient-text slide-up">Keahlian</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-effect p-8 rounded-2xl card-hover slide-up">
+                    <i class="fas fa-pencil-ruler text-4xl text-purple-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">UI Design</h3>
+                    <p class="text-gray-300">Ahli dalam menciptakan antarmuka yang memukau dengan Figma dan berbagai tools desain modern</p>
+                    <div class="mt-6">
+                        <div class="flex items-center space-x-2">
+                            <i class="fab fa-figma text-xl"></i>
+                            <span>Figma</span>
+                        </div>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <i class="fab fa-sketch text-xl"></i>
+                            <span>Sketch</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-effect p-8 rounded-2xl card-hover slide-up" style="animation-delay: 0.2s;">
+                    <i class="fas fa-users text-4xl text-purple-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">UX Research</h3>
+                    <p class="text-gray-300">Penelitian mendalam tentang kebutuhan pengguna dan pengujian usability dengan metode modern</p>
+                    <div class="mt-6">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-chart-bar text-xl"></i>
+                            <span>Analytics</span>
+                        </div>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <i class="fas fa-tasks text-xl"></i>
+                            <span>User Testing</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-effect p-8 rounded-2xl card-hover slide-up" style="animation-delay: 0.4s;">
+                    <i class="fas fa-mobile-alt text-4xl text-purple-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Prototyping</h3>
+                    <p class="text-gray-300">Pembuatan prototipe interaktif dan wireframe yang detail dengan tools terkini</p>
+                    <div class="mt-6">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-code text-xl"></i>
+                            <span>Interactive Prototypes</span>
+                        </div>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <i class="fas fa-pencil-alt text-xl"></i>
+                            <span>Wireframing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section with Interactive Cards -->
+    <section id="projects" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 gradient-text slide-up">Proyek Terbaik</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Project Card 1 -->
+                <div class="glass-effect rounded-2xl overflow-hidden card-hover slide-up">
+                    <div class="relative group">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-600 opacity-20 group-hover:opacity-30 transition duration-300"></div>
+                        <img src="/api/placeholder/600/400" alt="Project 1" class="w-full transform group-hover:scale-105 transition duration-300" />
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                            <a href="#" class="bg-white text-gray-900 px-6 py-2 rounded-full hover:bg-purple-500 hover:text-white transition duration-300">
+                                Lihat Detail
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-4 gradient-text">Redesign Aplikasi Mobile</h3>
+                        <p class="text-gray-300 mb-6">
+                            UI/UX redesign yang sophisticated untuk meningkatkan pengalaman pengguna pada aplikasi mobile banking.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-20 rounded-full text-purple-400 text-sm">UI Design</span>
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-20 rounded-full text-purple-400 text-sm">Mobile App</span>
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-20 rounded-full text-purple-400 text-sm">Figma</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="glass-effect rounded-2xl overflow-hidden card-hover slide-up">
+                    <div class="relative group">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-600 opacity-20 group-hover:opacity-30 transition duration-300"></div>
+                        <img src="/api/placeholder/600/400" alt="Project 2" class="w-full transform group-hover:scale-105 transition duration-300" />
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                            <a href="#" class="bg-white text-gray-900 px-6 py-2 rounded-full hover:bg-purple-500 hover:text-white transition duration-300">
+                                Lihat Detail
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-4 gradient-text">Website E-learning</h3>
+                        <p class="text-gray-300 mb-6">
+                            Platform pembelajaran online dengan desain yang elegan dan fokus pada pengalaman belajar yang optimal.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-20 rounded-full text-purple-400 text-sm">Web Design</span>
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-20 rounded-full text-purple-400 text-sm">UX Research</span>
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-20 rounded-full text-purple-400 text-sm">Prototype</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section with Interactive Elements -->
+    <section id="contact" class="py-20 gradient-bg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 gradient-text slide-up">Mari Berkolaborasi</h2>
+            
+            <!-- Social Media Links with Hover Effects -->
+            <div class="max-w-xl mx-auto mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Instagram -->
+                    <a href="https://instagram.com/@Ihwanurdi24" target="_blank" 
+                       class="glass-effect p-6 rounded-xl card-hover flex flex-col items-center group">
+                        <div class="relative">
+                            <i class="fab fa-instagram text-4xl text-pink-500 mb-3 transform group-hover:scale-110 transition-transform"></i>
+                            <div class="absolute inset-0 bg-pink-500 opacity-20 rounded-full blur-lg -z-10"></div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Instagram</h3>
+                        <p class="text-gray-300">@Ihwanurdi24</p>
+                    </a>
+                    
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/6283853787383" target="_blank"
+                       class="glass-effect p-6 rounded-xl card-hover flex flex-col items-center group">
+                        <div class="relative">
+                            <i class="fab fa-whatsapp text-4xl text-green-500 mb-3 transform group-hover:scale-110 transition-transform"></i>
+                            <div class="absolute inset-0 bg-green-500 opacity-20 rounded-full blur-lg -z-10"></div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">WhatsApp</h3>
+                        <p class="text-gray-300">+62 838-5378-7383</p>
+                    </a>
+                    
+                    <!-- Facebook -->
+                    <a href="https://facebook.com/Ihwan Urdi" target="_blank"
+                       class="glass-effect p-6 rounded-xl card-hover flex flex-col items-center group">
+                        <div class="relative">
+                            <i class="fab fa-facebook text-4xl text-blue-500 mb-3 transform group-hover:scale-110 transition-transform"></i>
+                            <div class="absolute inset-0 bg-blue-500 opacity-20 rounded-full blur-lg -z-10"></div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Facebook</h3>
+                        <p class="text-gray-300">Ihwan Urdi</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact Form with Modern Styling -->
+            <div class="max-w-xl mx-auto glass-effect p-8 rounded-2xl slide-up">
+                <form class="space-y-6" id="contactForm">
+                    <div class="relative">
+                        <input type="text" id="name" required
+                               class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 text-white peer">
+                        <label for="name" 
+                               class="absolute left-4 top-3 text-gray-400 transition-all duration-300 peer-focus:-top-6 peer-focus:text-sm peer-valid:-top-6 peer-valid:text-sm">
+                            Nama
+                        </label>
+                    </div>
+                    <div class="relative">
+                        <input type="email" id="email" required
+                               class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 text-white peer">
+                        <label for="email"
+                               class="absolute left-4 top-3 text-gray-400 transition-all duration-300 peer-focus:-top-6 peer-focus:text-sm peer-valid:-top-6 peer-valid:text-sm">
+                            Email
+                        </label>
+                    </div>
+                    <div class="relative">
+                        <textarea id="message" rows="4" required
+                                  class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 text-white peer"></textarea>
+                        <label for="message"
+                               class="absolute left-4 top-3 text-gray-400 transition-all duration-300 peer-focus:-top-6 peer-focus:text-sm peer-valid:-top-6 peer-valid:text-sm">
+                            Pesan
+                        </label>
+                    </div>
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-8 py-4 rounded-lg hover:shadow-lg transform hover:scale-105 transition duration-300 relative overflow-hidden group">
+                        <span class="relative z-10">Kirim Pesan</span>
+                        <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition duration-300"></div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer with Modern Design -->
+    <footer class="py-12 bg-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col items-center">
+                <div class="flex justify-center space-x-8 mb-8">
+                    <a href="https://instagram.com/@Ihwanurdi24" target="_blank" 
+                       class="text-gray-400 hover:text-pink-400 transform hover:scale-110 transition duration-300">
+                        <i class="fab fa-instagram text-3xl"></i>
+                    </a>
+                    <a href="https://wa.me/6283853787383" target="_blank"
+                       class="text-gray-400 hover:text-green-400 transform hover:scale-110 transition duration-300">
+                        <i class="fab fa-whatsapp text-3xl"></i>
+                    </a>
+                    <a href="https://facebook.com/Ihwan Urdi" target="_blank"
+                       class="text-gray-400 hover:text-blue-400 transform hover:scale-110 transition duration-300">
+                        <i class="fab fa-facebook text-3xl"></i>
+                    </a>
+                </div>
+                <p class="text-gray-400 text-center">&copy; 2025 Ihwan Urdi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Animations and Interactions -->
+    <script>
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-gray-900', 'shadow-lg');
+            } else {
+                navbar.classList.remove('bg-gray-900', 'shadow-lg');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const menuButton = document.getElementById('menuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth Scroll for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll Animation for Elements
+        const slideUpElements = document.querySelectorAll('.slide-up');
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        slideUpElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Animated Underline for Navigation Links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.querySelector('span').style.width = '100%';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.querySelector('span').style.width = '0';
+            });
+        });
+
+        // Form Submission Handler
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Pesan telah terkirim! Terima kasih telah menghubungi saya.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
